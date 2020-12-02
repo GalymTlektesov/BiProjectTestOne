@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a64e5b0e436d4bed9780211ae245f7b, type: 3}
+  m_Name: Grass_Data
+  m_EditorClassIdentifier: 
+  dataName: Grass
+  dragonBonesJSON: {fileID: 4900000, guid: 418fcdff42bef40b9b8c95d816d47791, type: 3}
+  textureAtlas:
+  - textureAtlasJSON: {fileID: 4900000, guid: cbf3d093e03f2438b8f83c9fbb5fe9fb, type: 3}
+    texture: {fileID: 2800000, guid: 570dccdd725ad4b4a9dd0724280608c0, type: 3}
+    material: {fileID: 2100000, guid: 8ac3604d326f944c68be830cc9c7847a, type: 2}
+    uiMaterial: {fileID: 0}
