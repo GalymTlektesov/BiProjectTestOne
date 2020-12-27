@@ -1,22 +1,15 @@
 ﻿<Properties StartupConfiguration="{6943E1D2-4B81-2D26-47DA-DD389CA53D84}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/PostProcessingVolume/PostProcessing/Editor/PropertyDrawers/MinDrawer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Jerk.cs">
     <Files>
-      <File FileName="Assets/Scripts/PlayerController.cs" Line="26" Column="25" />
-      <File FileName="Assets/Scripts/Jerk.cs" Line="31" Column="97" />
-      <File FileName="Assets/PostProcessingVolume/PostProcessing/Editor/PropertyDrawers/MinDrawer.cs" Line="22" Column="14" />
+      <File FileName="Assets/Scripts/Jerk.cs" Line="42" Column="1" />
+      <File FileName="Assets/Scripts/PlayerController.cs" />
+      <File FileName="Assets/Scripts/CameraController.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="BiProjectTestOne" expanded="True">
             <Node name="Assets" expanded="True" selected="True">
-              <Node name="PostProcessingVolume" expanded="True">
-                <Node name="PostProcessing" expanded="True">
-                  <Node name="Editor" expanded="True">
-                    <Node name="PropertyDrawers" expanded="True" />
-                  </Node>
-                </Node>
-              </Node>
               <Node name="Scripts" expanded="True" />
             </Node>
           </Node>
@@ -26,7 +19,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="21d77e19-28d8-473b-8637-a83da987e5ce" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="175393f8-3790-4c50-9ebc-93beae9df79d" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

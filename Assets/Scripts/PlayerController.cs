@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float jumpForce;
     private int countJump;
-    private UnityArmatureComponent armature;
+    internal UnityArmatureComponent armature;
     public float animSpeed;
     private float velocity;
     public float jumpUp;
