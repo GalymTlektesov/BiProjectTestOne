@@ -25,11 +25,11 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetButtonUp("Horizontal") && !Input.GetButton("Horizontal"))
         {
-            armature.animation.FadeIn("Idle", animSpeed);
+            AnimSet("Idle", animSpeed);
         }
         if (Input.GetButtonDown("Horizontal"))
         {
-            armature.animation.FadeIn("run", animSpeed);
+            AnimSet("run", animSpeed);
         }
 
         Jump();
@@ -50,14 +50,7 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(velocity * speed, rb.velocity.y);
 
 
-        if (velocity < 0)
-        {
-            transform.rotation = Quaternion.Euler(0, 180, 0);
-        }
-        if (velocity > 0)
-        {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
+        Flip(velocity);
     }
 
 
@@ -66,6 +59,24 @@ public class PlayerController : MonoBehaviour
         if (collision.collider.CompareTag("Floor"))
         {
             countJump = 0;
+        }
+    }
+
+
+    public void AnimSet(string animName, float speed)
+    {
+        armature.animation.FadeIn(animName, speed);
+    }
+
+    public void Flip(float value)
+    {
+        if (value > 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        if (value < 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
         }
     }
 }

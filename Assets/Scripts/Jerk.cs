@@ -55,10 +55,10 @@ public class Jerk : MonoBehaviour
                     rayHorizontal = new Ray2D(transform.position, Vector2.right);
                     transform.rotation = Quaternion.Euler(0, 0, 0);
                 }
-                hitMouse = Physics2D.Raycast(rayHorizontal.origin, rayHorizontal.direction, distance, maskWall);
 
-                if (hitMouse && Physics2D.Raycast(ray.origin, -ray.direction, 0.5f, maskWall))
+                if (Physics2D.Raycast(ray.origin, -ray.direction, 0.5f, maskWall))
                 {
+                    hitMouse = Physics2D.Raycast(rayHorizontal.origin, rayHorizontal.direction, distance, maskWall);
                     target.rotation = Quaternion.identity;
                     Quaternion rotation = Quaternion.LookRotation(transform.position - targetUp.position, transform.TransformDirection(Vector3.up));
                     target.rotation = new Quaternion(0, 0, rotation.z * 4, rotation.w);
@@ -101,6 +101,4 @@ public class Jerk : MonoBehaviour
             target.position = transform.position;
         }
     }
-
-
 }
