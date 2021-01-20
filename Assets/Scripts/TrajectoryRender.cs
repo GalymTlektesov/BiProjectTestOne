@@ -9,7 +9,7 @@ public class TrajectoryRender : MonoBehaviour
         LineRenderer = GetComponent<LineRenderer>();    
     }
 
-    public void ShowTrajectory(Vector3 origin, Vector3 endPoint)
+    public void ShowTrajectory(Vector2 origin, Vector2 endPoint)
     {
         LineRenderer.SetPosition(0, origin);
         LineRenderer.SetPosition(1, endPoint);

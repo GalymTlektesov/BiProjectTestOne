@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
     {
         if (distatnce != transform.position - target.position)
         {
-            transform.position = distatnce + target.position;
+            transform.position = Vector3.Lerp(transform.position , distatnce + target.position, Time.timeScale);
         }
     }
 }

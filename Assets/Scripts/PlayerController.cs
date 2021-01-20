@@ -7,29 +7,24 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float jumpForce;
     private int countJump;
-    internal UnityArmatureComponent armature;
-    public float animSpeed;
+    private Animator animation;
+    internal float animSpeed = 1.0f;
     private float velocity;
     public float jumpUp;
     public float speedJump;
-    
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        armature = GetComponent<UnityArmatureComponent>();
+        animation = GetComponent<Animator>();
         //Cursor.visible = false;
     }
 
     private void Update()
     {
-        if (Input.GetButtonUp("Horizontal") && !Input.GetButton("Horizontal"))
+        if (!Input.anyKey)
         {
-            AnimSet("Idle", animSpeed);
-        }
-        if (Input.GetButtonDown("Horizontal"))
-        {
-            AnimSet("run", animSpeed);
+            AnimSet(0);
         }
 
         Jump();
@@ -49,8 +44,11 @@ public class PlayerController : MonoBehaviour
         velocity = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(velocity * speed, rb.velocity.y);
 
+        if (velocity != 0)
+        {
+            Flip(velocity);
+        }
 
-        Flip(velocity);
     }
 
 
@@ -63,13 +61,14 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    public void AnimSet(string animName, float speed)
+    public void AnimSet(int animNumber)
     {
-        armature.animation.FadeIn(animName, speed);
+        animation.SetInteger("State", animNumber);
     }
 
     public void Flip(float value)
     {
+        AnimSet(1);
         if (value > 0)
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);

@@ -1,7 +1,43 @@
 fileFormatVersion: 2
 guid: 667cbc01c181d4be28f48c80d827fd4c
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -5568605959462979054
+    second: GG_tex_0
+  - first:
+      213: 951245081238370098
+    second: GG_tex_1
+  - first:
+      213: -6073300189281547289
+    second: GG_tex_2
+  - first:
+      213: -7528636906352321352
+    second: GG_tex_3
+  - first:
+      213: -3652241088259638931
+    second: GG_tex_4
+  - first:
+      213: 5042593986313328985
+    second: GG_tex_5
+  - first:
+      213: -2751462233978626075
+    second: GG_tex_6
+  - first:
+      213: -3660297883390408020
+    second: GG_tex_7
+  - first:
+      213: 6807495300530360853
+    second: GG_tex_8
+  - first:
+      213: 8599342049065442231
+    second: GG_tex_9
+  - first:
+      213: 2319839365869942498
+    second: GG_tex_10
+  - first:
+      213: 765249000986937060
+    second: GG_tex_11
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -23,6 +59,7 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -40,7 +77,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -57,6 +94,7 @@ TextureImporter:
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -71,9 +109,297 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: GG_tex_0
+      rect:
+        serializedVersion: 2
+        x: 453
+        y: 3425
+        width: 200
+        height: 344
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21af514326658b2b0800000000000000
+      internalID: -5568605959462979054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GG_tex_1
+      rect:
+        serializedVersion: 2
+        x: 1805
+        y: 3673
+        width: 144
+        height: 124
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 237fc898c50833d00800000000000000
+      internalID: 951245081238370098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GG_tex_2
+      rect:
+        serializedVersion: 2
+        x: 3259
+        y: 3589
+        width: 58
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7eb8f83d7ad47bba0800000000000000
+      internalID: -6073300189281547289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GG_tex_3
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 3443
+        width: 92
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bc59f14f98e48790800000000000000
+      internalID: -7528636906352321352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GG_tex_4
+      rect:
+        serializedVersion: 2
+        x: 1895
+        y: 2789
+        width: 128
+        height: 168
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d69b234a412a05dc0800000000000000
+      internalID: -3652241088259638931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GG_tex_5
+      rect:
+        serializedVersion: 2
+        x: 3155
+        y: 2651
+        width: 122
+        height: 188
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9591ab48384eaf540800000000000000
+      internalID: 5042593986313328985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GG_tex_6
+      rect:
+        serializedVersion: 2
+        x: 563
+        y: 2515
+        width: 114
+        height: 164
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ef1dc21da7d0d9d0800000000000000
+      internalID: -2751462233978626075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GG_tex_7
+      rect:
+        serializedVersion: 2
+        x: 1965
+        y: 1749
+        width: 54
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: caa8668d772043dc0800000000000000
+      internalID: -3660297883390408020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GG_tex_8
+      rect:
+        serializedVersion: 2
+        x: 649
+        y: 1557
+        width: 86
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 512d04e78e4197e50800000000000000
+      internalID: 6807495300530360853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GG_tex_9
+      rect:
+        serializedVersion: 2
+        x: 3241
+        y: 1439
+        width: 118
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bb10a84800075770800000000000000
+      internalID: 8599342049065442231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GG_tex_10
+      rect:
+        serializedVersion: 2
+        x: 1833
+        y: 687
+        width: 68
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e635aabc99b13020800000000000000
+      internalID: 2319839365869942498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GG_tex_11
+      rect:
+        serializedVersion: 2
+        x: 535
+        y: 481
+        width: 88
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e68c8479e5be9a00800000000000000
+      internalID: 765249000986937060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

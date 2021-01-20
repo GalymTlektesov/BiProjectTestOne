@@ -1,35 +1,26 @@
-﻿<Properties>
+﻿<Properties StartupConfiguration="{6943E1D2-4B81-2D26-47DA-DD389CA53D84}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Jerk.cs">
     <Files>
-      <File FileName="Assets/Scripts/Jerk.cs" Line="30" Column="71" />
-      <File FileName="Assets/Scripts/PlayerController.cs" Line="75" Column="31" />
-      <File FileName="Assets/Scripts/CameraController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/TrajectoryRender.cs" Line="18" Column="1" />
+      <File FileName="Assets/Scripts/Jerk.cs" Line="107" Column="1" />
+      <File FileName="Assets/Scripts/ThrowRapier.cs" Line="6" Column="2" />
+      <File FileName="Assets/Scripts/TrajectoryRender.cs" Line="15" Column="45" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="BiProjectTestOne" expanded="True">
-            <Node name="Assembly-CSharp" expanded="True">
-              <Node name="Assets" expanded="True">
-                <Node name="PostProcessingVolume" expanded="True">
-                  <Node name="PostProcessing Volume" expanded="True">
-                    <Node name="Scripts" expanded="True" />
-                  </Node>
-                </Node>
-                <Node name="Scripts" expanded="True">
-                  <Node name="Jerk.cs" selected="True" />
-                </Node>
-              </Node>
-            </Node>
-          </Node>
+          <Node name="BiProjectTestOne" expanded="True" selected="True" />
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="BiProjectTestOne" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="2086f27a-e2e4-4631-85f4-c726104414f1" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="700371b1-b05f-4d9c-9a4a-79b145f43095" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
