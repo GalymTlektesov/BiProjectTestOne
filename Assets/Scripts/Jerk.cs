@@ -155,7 +155,7 @@ public class Jerk : MonoBehaviour
             direction = Vector2.right;
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
-        rayHorizontal = new Ray2D(target[2].position, Vector2.left);
+        rayHorizontal = new Ray2D(target[2].position, direction);
 
         mouseHigherThanPlayer = mousePos.y < transform.position.y && Mathf.Abs(transform.position.y - mousePos.y) > 1.5f ?
             false : true;

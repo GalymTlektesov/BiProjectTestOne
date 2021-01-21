@@ -1,14 +1,20 @@
-﻿<Properties StartupConfiguration="{6943E1D2-4B81-2D26-47DA-DD389CA53D84}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Jerk.cs">
+﻿<Properties>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ThrowPlayer.cs">
     <Files>
-      <File FileName="Assets/Scripts/Jerk.cs" Line="107" Column="1" />
-      <File FileName="Assets/Scripts/ThrowRapier.cs" Line="6" Column="2" />
-      <File FileName="Assets/Scripts/TrajectoryRender.cs" Line="15" Column="45" />
+      <File FileName="Assets/Scripts/ThrowPlayer.cs" Line="68" Column="47" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="BiProjectTestOne" expanded="True" selected="True" />
+          <Node name="BiProjectTestOne" expanded="True">
+            <Node name="Assembly-CSharp" expanded="True">
+              <Node name="Assets" expanded="True">
+                <Node name="Scripts" expanded="True">
+                  <Node name="ThrowPlayer.cs" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
         </State>
       </Pad>
       <Pad Id="MonoDevelop.UnitTesting.TestPad">
