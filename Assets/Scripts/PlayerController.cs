@@ -1,5 +1,6 @@
 ﻿using DragonBones;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class PlayerController : MonoBehaviour
     private float velocity;
     public float jumpUp;
     public float speedJump;
+    public float Popularity;
+    public Slider slider;
 
     private void Start()
     {
@@ -22,6 +25,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        slider.value = Popularity;
         if (!Input.anyKey)
         {
             AnimSet(0);
