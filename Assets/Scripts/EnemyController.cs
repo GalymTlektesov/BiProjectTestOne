@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class EnemyController : MonoBehaviour
     public bool isMotion;
     public bool isAlert;
     private float maxDistance;
+
+    public float health = 100;
+    public Slider slider;
 
 
     Ray2D ray;
@@ -52,14 +56,14 @@ public class EnemyController : MonoBehaviour
         if (hit)
         {
             var player = hit.collider.GetComponent<PlayerController>();
-            if (player.Popularity > 25)
+            if (PlayerController.Popularity > 25 || player.isAtatck)
             {
                 isAlert = true;
                 Flip();
-                if (player.Popularity > 50)
+                if (PlayerController.Popularity > 50 || player.isAtatck)
                 {
                     isMotion = true;
-                    if (Mathf.Abs(hit.point.x - transform.position.x) > 1f)
+                    if (Mathf.Abs(hit.point.x - transform.position.x) > 1.5f)
                     {
                         Debug.Log(Mathf.Abs(hit.point.x - transform.position.x));
                         rb.velocity = new Vector2(direction.x * speed, rb.velocity.y);
@@ -104,5 +108,23 @@ public class EnemyController : MonoBehaviour
     {
         ray = new Ray2D(eyes, direction);
         hit = Physics2D.Raycast(ray.origin, ray.direction, distanceRay, mask);
+    }
+
+
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.GetComponent<AtackPlayer>())
+        {
+            var atackPlayer = collision.GetComponent<AtackPlayer>();
+            health += atackPlayer.TakeDamage();
+            slider.value = health;
+            if (health <= 0)
+            {
+                PlayerController.Popularity += Random.Range(3, 11);
+                Destroy(gameObject);
+            }
+        }
     }
 }

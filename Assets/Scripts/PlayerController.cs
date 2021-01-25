@@ -1,6 +1,6 @@
-﻿using DragonBones;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,19 +13,26 @@ public class PlayerController : MonoBehaviour
     private float velocity;
     public float jumpUp;
     public float speedJump;
-    public float Popularity;
-    public Slider slider;
+    public static float Popularity;
+    public Slider[] slider;
+    public float health = 100;
+    public bool isAtatck;
+
+    public AtackPlayer atackPlayer;
 
     private void Start()
     {
+        Popularity = 15;
+        health = 100;
         rb = GetComponent<Rigidbody2D>();
         animation = GetComponent<Animator>();
         //Cursor.visible = false;
+        slider[0].value = Popularity;
+        slider[1].value = health;
     }
 
     private void Update()
     {
-        slider.value = Popularity;
         if (!Input.anyKey)
         {
             AnimSet(0);
@@ -45,6 +52,15 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (Input.GetButton("Fire1"))
+        {
+            isAtatck = true;
+            AnimSet(3);
+        }
+        else
+        {
+            isAtatck = false;
+        }
         velocity = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(velocity * speed, rb.velocity.y);
 
@@ -55,6 +71,21 @@ public class PlayerController : MonoBehaviour
 
     }
 
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.GetComponent<AtackEnemy>())
+        {
+            var atackEnemy = collision.GetComponent<AtackEnemy>();
+            health += atackEnemy.TakeDamage();
+            slider[0].value = Popularity;
+            slider[1].value = health;
+            if (health <= 0)
+            {
+                SceneManager.LoadScene(0, LoadSceneMode.Single);
+            }
+        }
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
