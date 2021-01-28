@@ -4,13 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D rb;
     public float speed;
     public float jumpForce;
-    private int countJump;
-    private Animator animation;
-    internal float animSpeed = 1.0f;
-    private float velocity;
     public float jumpUp;
     public float speedJump;
     public static float Popularity;
@@ -20,10 +15,21 @@ public class PlayerController : MonoBehaviour
 
     public AtackPlayer atackPlayer;
 
+    internal Rigidbody2D rb;
+    internal float animSpeed = 1.0f;
+    internal float scaleX;
+
+    private AreaAtack areaAtack;
+    private int countJump;
+    private Animator animation;
+    private float velocity;
+
     private void Start()
     {
+        scaleX = transform.localScale.x;
         Popularity = 15;
         health = 100;
+        areaAtack = GetComponentInChildren<AreaAtack>();
         rb = GetComponent<Rigidbody2D>();
         animation = GetComponent<Animator>();
         //Cursor.visible = false;
@@ -52,8 +58,10 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        
         if (Input.GetButton("Fire1"))
         {
+            Flip(areaAtack.pointAtatck.position.x - transform.position.x);
             isAtatck = true;
             AnimSet(3);
         }
@@ -84,6 +92,8 @@ public class PlayerController : MonoBehaviour
             {
                 SceneManager.LoadScene(0, LoadSceneMode.Single);
             }
+            float pointOfImpact = atackEnemy.transform.position.x - transform.position.x;
+            //Flip(pointOfImpact);
         }
     }
 
@@ -106,11 +116,13 @@ public class PlayerController : MonoBehaviour
         AnimSet(1);
         if (value > 0)
         {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
+            //transform.eulerAngles = new Vector2(0, 0);
+            transform.localScale = new Vector3(scaleX, transform.localScale.y, 1);
         }
         if (value < 0)
         {
-            transform.rotation = Quaternion.Euler(0, 180, 0);
+            //transform.eulerAngles = new Vector2(0, 180);
+            transform.localScale = new Vector3(-scaleX, transform.localScale.y, 1);
         }
     }
 }

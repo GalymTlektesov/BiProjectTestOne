@@ -14,7 +14,7 @@ public class ThrowPlayer : MonoBehaviour
     private float nextDelay = 0;
     private bool canDealay;
 
-    private bool mouseHigherThanPlayer;
+    public bool mouseHigherThanPlayer;
 
 
     Ray2D ray;
@@ -59,13 +59,14 @@ public class ThrowPlayer : MonoBehaviour
     {
         Flip(mousePos);
         mousePos = TargetPointValue(mousePos.x, mousePos.y);
-        ray = new Ray2D(mousePos, Vector2.down);
-        hit = mouseHigherThanPlayer ? Physics2D.Raycast(ray.origin, ray.direction, distance, mask[0]) :
-                Physics2D.Raycast(new Vector2(mousePos.x, transform.position.y), Vector2.down, distance, mask[0]);
+        ray = mouseHigherThanPlayer ? new Ray2D(mousePos, Vector2.down) :
+            new Ray2D(new Vector2(mousePos.x, target[2].position.y), Vector2.down);
+        hit = Physics2D.Raycast(ray.origin, ray.direction, distance * 2, mask[0]);
 
         if (hit)
         {
-            if (Physics2D.Raycast(ray.origin, ray.direction, distance, mask[1]) && mouseHigherThanPlayer)
+            Debug.DrawRay(ray.origin, ray.direction * distance, Color.black);
+            if (Physics2D.Raycast(ray.origin, ray.direction, -0.5f, mask[1]))
             {
                 RaycastHit2D hitWall = Physics2D.Raycast(rayHorizontal.origin, rayHorizontal.direction, distance, mask[0]);
                 TargetRotate(new Vector2(hitWall.point.x, mousePos.y), 4.0f, 1.0f, 0);
@@ -102,7 +103,8 @@ public class ThrowPlayer : MonoBehaviour
     private void TargetRotate(Vector3 targetPosition, float zRotation = 1.0f, float wRotation = -1.0f, int index = 1)
     {
         target[index].rotation = Quaternion.identity;
-        Quaternion rotation = Quaternion.LookRotation(transform.position - target[Mathf.Abs(index -1)].position, transform.TransformDirection(Vector3.up));
+        Quaternion rotation = Quaternion.LookRotation(transform.position - target[Mathf.Abs(index -1)].position,
+            transform.TransformDirection(Vector3.up));
         target[0].rotation = new Quaternion(0, 0, rotation.z * zRotation, rotation.w * wRotation);
         target[0].position = targetPosition;
     }
@@ -113,16 +115,15 @@ public class ThrowPlayer : MonoBehaviour
         if (mousePos.x < transform.position.x)
         {
             direction = Vector2.left;
-            transform.rotation = Quaternion.Euler(0, 180, 0);
+            transform.localScale = new Vector3(-playerController.scaleX, transform.localScale.y, 1);
         }
         else
         {
             direction = Vector2.right;
-            transform.rotation = Quaternion.Euler(0, 0, 0);
+            transform.localScale = new Vector3(playerController.scaleX, transform.localScale.y, 1);
         }
         rayHorizontal = new Ray2D(target[2].position, direction);
 
-        mouseHigherThanPlayer = mousePos.y < target[2].position.y && Mathf.Abs(target[2].position.y - mousePos.y) > 1.5f ?
-            false : true;
+        mouseHigherThanPlayer = mousePos.y > target[2].position.y;
     }
 }
