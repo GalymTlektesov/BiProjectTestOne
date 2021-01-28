@@ -22,9 +22,9 @@ public class EnemyController : MonoBehaviour
     private Slider slider;
     private Canvas canvas;
 
-    Ray2D ray;
-    RaycastHit2D hit;
-    Vector2 direction;
+    private Ray2D ray;
+    private RaycastHit2D hit;
+    private float direction;
 
     void Start()
     {
@@ -62,12 +62,17 @@ public class EnemyController : MonoBehaviour
                 {
                     if (Physics2D.Raycast(alertEyes.position, ray.direction, maxDistance, mask[1]).collider.GetComponent<EnemyController>() != gameObject.GetComponent<EnemyController>())
                     {
-                        StartCoroutine(Physics2D.Raycast(alertEyes.position, ray.direction, maxDistance, mask[1]).collider.GetComponent<EnemyController>().DangerForm(2));
+                        Physics2D.Raycast(alertEyes.position, ray.direction, maxDistance, mask[1]).collider.GetComponent<EnemyController>().isDanger = true;
                     }
 
                     if (Mathf.Abs(hit.point.x - transform.position.x) > 1.5f)
                     {
-                        rb.velocity = new Vector2(direction.x * speed, rb.velocity.y);
+                        rb.velocity = new Vector2(direction * speed, rb.velocity.y);
+                        AnimSet(1);
+                    }
+                    else if (Mathf.Abs(hit.point.x - transform.position.x) < 0.05f)
+                    {
+                        rb.velocity = new Vector2(-direction * speed, rb.velocity.y);
                         AnimSet(1);
                     }
                     else
@@ -76,6 +81,17 @@ public class EnemyController : MonoBehaviour
                     }
                 }
             }
+        }
+        if(hit.collider == null)
+        {
+            isSeeThePlayer = false;
+            AnimSet(0);
+            isDanger = false;
+            canvas.gameObject.SetActive(false);
+            isAlert = false;
+            animation.enabled = false;
+            VisibilityOverview(distance, Eyes.position);
+            canvas.gameObject.SetActive(true);
         }
     }
 
@@ -86,21 +102,22 @@ public class EnemyController : MonoBehaviour
 
     private void Flip()
     {
-        if (hit.point.x > transform.position.x)
+        var value = hit.point.x - transform.position.x > 0.5f;
+        if (hit.point.x - transform.position.x > 0.5f)
         {
-            transform.localScale = new Vector3(1, transform.localScale.y, 1);
-            direction = Vector2.right;
+            direction = 1;
+            transform.localScale = new Vector3(direction, transform.localScale.y, 1);
         }
-        else
+        else if (hit.point.x - transform.position.x < -1.0f)
         {
-            transform.localScale = new Vector3(-1, transform.localScale.y, 1);
-            direction = Vector2.left;
+            direction = -1;
+            transform.localScale = new Vector3(direction, transform.localScale.y, 1);
         }
     }
 
     private void VisibilityOverview(float distanceRay, Vector2 eyes)
     {
-        ray = new Ray2D(eyes, direction);
+        ray = new Ray2D(eyes, new Vector2(direction, 0));
         hit = Physics2D.Raycast(ray.origin, ray.direction, distanceRay, mask[0]);
     }
 
@@ -113,7 +130,7 @@ public class EnemyController : MonoBehaviour
         {
             var atackPlayer = collision.GetComponent<AtackPlayer>();
             slider.value = health;
-            StartCoroutine(DangerForm(3));
+            isDanger = true;
             health += !isSeeThePlayer ? atackPlayer.TakeDamage() - Random.Range(30, 50) : atackPlayer.TakeDamage();
             if (health <= 0)
             {
@@ -143,7 +160,7 @@ public class EnemyController : MonoBehaviour
     private bool CameraViewEnemy()
     {
         var origin = new Vector2(alertEyes.position.x + distance, alertEyes.position.y);
-        var rayViewEnemy = new Ray2D(origin, direction);
+        var rayViewEnemy = new Ray2D(origin, new Vector2(direction, 0));
         var hitViewEnemy = Physics2D.Raycast(rayViewEnemy.origin, rayViewEnemy.direction, maxDistance * 2, mask[0]);
         Debug.DrawRay(rayViewEnemy.origin, rayViewEnemy.direction * (maxDistance * 2));
 
@@ -155,23 +172,5 @@ public class EnemyController : MonoBehaviour
         {
             return true;
         }
-    }
-
-
-
-    public IEnumerator DangerForm(float time)
-    {
-        isDanger = true;
-        canvas.gameObject.SetActive(true);
-
-        yield return new WaitForSeconds(time);
-
-        AnimSet(0);
-        isDanger = false;
-        canvas.gameObject.SetActive(false);
-        isSeeThePlayer = false;
-        isAlert = false;
-        animation.enabled = false;
-        VisibilityOverview(distance, Eyes.position);
     }
 }

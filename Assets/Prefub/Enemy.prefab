@@ -1488,7 +1488,7 @@ Transform:
   m_GameObject: {fileID: 6802450754679232683}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 8.29, y: -1.899, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
   - {fileID: 7168362702332795043}
   - {fileID: 6640956549584436192}
@@ -1532,7 +1532,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &8282323117269737296
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1567,7 +1567,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6802450754679232683}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 8bf77bf338a0b401aafa2aa341838843, type: 2}
   m_CullingMode: 0
