@@ -74,6 +74,7 @@ public class PlayerController : MonoBehaviour
 
         if (velocity != 0)
         {
+            AnimSet(1);
             Flip(velocity);
         }
 
@@ -92,7 +93,7 @@ public class PlayerController : MonoBehaviour
             {
                 SceneManager.LoadScene(0, LoadSceneMode.Single);
             }
-            float pointOfImpact = atackEnemy.transform.position.x - transform.position.x;
+            //float pointOfImpact = atackEnemy.transform.position.x - transform.position.x;
             //Flip(pointOfImpact);
         }
     }
@@ -113,16 +114,6 @@ public class PlayerController : MonoBehaviour
 
     public void Flip(float value)
     {
-        AnimSet(1);
-        if (value > 0)
-        {
-            //transform.eulerAngles = new Vector2(0, 0);
-            transform.localScale = new Vector3(scaleX, transform.localScale.y, 1);
-        }
-        if (value < 0)
-        {
-            //transform.eulerAngles = new Vector2(0, 180);
-            transform.localScale = new Vector3(-scaleX, transform.localScale.y, 1);
-        }
+        transform.localScale = new Vector3(scaleX * (value / Mathf.Abs(value)), transform.localScale.y, 1);
     }
 }

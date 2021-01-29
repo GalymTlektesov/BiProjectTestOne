@@ -111,19 +111,11 @@ public class ThrowPlayer : MonoBehaviour
 
     private void Flip(Vector3 mousePos)
     {
-        var direction = new Vector2();
-        if (mousePos.x < transform.position.x)
-        {
-            direction = Vector2.left;
-            transform.localScale = new Vector3(-playerController.scaleX, transform.localScale.y, 1);
-        }
-        else
-        {
-            direction = Vector2.right;
-            transform.localScale = new Vector3(playerController.scaleX, transform.localScale.y, 1);
-        }
-        rayHorizontal = new Ray2D(target[2].position, direction);
+        var difference = mousePos.x - transform.position.x;
+        playerController.Flip(difference);
+        float direction = Mathf.Abs(playerController.scaleX / playerController.scaleX);
 
+        rayHorizontal = new Ray2D(target[2].position, new Vector2(direction, 0));
         mouseHigherThanPlayer = mousePos.y > target[2].position.y;
     }
 }
