@@ -34,7 +34,6 @@ public class ThrowPlayer : MonoBehaviour
         target[0].gameObject.SetActive(isJerk);
         if (canDealay && Input.GetButton("Fire2"))
         {
-            playerController.AnimSet(2);
             Throw(mousePos);
         }
         if (Input.GetButtonUp("Fire2"))
@@ -65,8 +64,8 @@ public class ThrowPlayer : MonoBehaviour
 
         if (hit)
         {
-            Debug.DrawRay(ray.origin, ray.direction * distance, Color.black);
-            if (Physics2D.Raycast(ray.origin, ray.direction, -0.5f, mask[1]))
+            playerController.AnimSet(2);
+            if (Physics2D.Raycast(ray.origin, -ray.direction, 0.5f, mask[1]))
             {
                 RaycastHit2D hitWall = Physics2D.Raycast(rayHorizontal.origin, rayHorizontal.direction, distance, mask[0]);
                 TargetRotate(new Vector2(hitWall.point.x, mousePos.y), 4.0f, 1.0f, 0);
@@ -113,8 +112,7 @@ public class ThrowPlayer : MonoBehaviour
     {
         var difference = mousePos.x - transform.position.x;
         playerController.Flip(difference);
-        float direction = Mathf.Abs(playerController.scaleX / playerController.scaleX);
-
+        float direction = Mathf.Abs(difference) / difference;
         rayHorizontal = new Ray2D(target[2].position, new Vector2(direction, 0));
         mouseHigherThanPlayer = mousePos.y > target[2].position.y;
     }

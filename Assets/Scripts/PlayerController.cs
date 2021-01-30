@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public float jumpUp;
     public float speedJump;
-    public static float Popularity;
+    public float Popularity;
     public Slider[] slider;
     public float health = 100;
     public bool isAtatck;
