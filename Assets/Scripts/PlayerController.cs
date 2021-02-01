@@ -5,11 +5,9 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public float speed;
-
-    public static PlayerController player;
+    public float health = 100;
     public float Popularity;
     public Slider[] slider;
-    public float health = 100;
     public Animator panelAnimation;
 
     internal Rigidbody2D rb;
@@ -17,7 +15,6 @@ public class PlayerController : MonoBehaviour
 
     private AreaAtack areaAtack;
     private Animator animation;
-    private float velocity;
     internal bool isLive;
 
 
@@ -33,7 +30,6 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        player = GetComponent<PlayerController>();
         isLive = true;
         scaleX = transform.localScale.x;
         areaAtack = GetComponentInChildren<AreaAtack>();
@@ -47,7 +43,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (!Input.anyKey && isLive)
+        if (!isLive)
+        {
+            return;
+        }
+        if (!Input.anyKey)
         {
             AnimSet(0);
         }
@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
             Flip(areaAtack.pointAtatck.position.x - transform.position.x);
             AnimSet(3);
         }
-        velocity = Input.GetAxis("Horizontal");
+        var velocity = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(velocity * speed, rb.velocity.y);
 
         if (velocity != 0)
@@ -98,14 +98,14 @@ public class PlayerController : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
 
 
-        if (isGrounded == true && Input.GetKeyDown(KeyCode.Space))
+        if (isGrounded  && Input.GetKeyDown(KeyCode.Space))
         {
             isJumping = true;
             jumpTimeCounter = jumpTime;
             rb.velocity = Vector2.up * jumpForce;
         }
 
-        if (Input.GetKey(KeyCode.Space) && isJumping == true)
+        if (Input.GetKey(KeyCode.Space) && isJumping)
         {
             if (jumpTimeCounter > 0)
             {
@@ -142,12 +142,5 @@ public class PlayerController : MonoBehaviour
         AnimSet(4);
         yield return new WaitForSeconds(2.5f);
         panelAnimation.SetBool("PlayerDeath", true);
-    }
-
-
-    public static void PopularityPlus(float value)
-    {
-        player.Popularity += value;
-        player.slider[0].value = player.Popularity;
     }
 }

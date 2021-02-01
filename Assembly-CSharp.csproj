@@ -62,6 +62,7 @@
     <Compile Include="Assets/PostProcessingVolume/PostProcessing Volume/Scripts/PostProcessVolumeReceiver.cs" />
     <Compile Include="Assets/PostProcessingVolume/PostProcessing Volume/Example/ExampleSceneScripts/FPSViewer.cs" />
     <Compile Include="Assets/DragonBones/Demos/Scripts/ReplaceSlotDisplay.cs" />
+    <Compile Include="Assets/Scripts/CloakController.cs" />
     <Compile Include="Assets/DragonBones/Scripts/armature/TransformObject.cs" />
     <Compile Include="Assets/DragonBones/Scripts/parser/BinaryDataParser.cs" />
     <Compile Include="Assets/DragonBones/Scripts/event/EventObject.cs" />
@@ -179,7 +180,7 @@
     <Compile Include="Assets/DragonBones/Scripts/armature/Constraint.cs" />
     <Compile Include="Assets/PostProcessingVolume/PostProcessing/Runtime/Models/DitheringModel.cs" />
     <Compile Include="Assets/DragonBones/Scripts/unity/UnitySlot.cs" />
-    <Compile Include="Assets/Scripts/CloakController.cs" />
+    <Compile Include="Assets/Scripts/EnemyOptimizer.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets/PostProcessingVolume/PostProcessing/Resources/Shaders/ScreenSpaceReflection.shader" />
