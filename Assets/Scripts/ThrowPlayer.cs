@@ -56,6 +56,13 @@ public class ThrowPlayer : MonoBehaviour
 
     private void Throw(Vector3 mousePos)
     {
+        if (!playerController.isLive)
+        {
+            isJerk = false;
+            target[0].position = transform.position;
+            Time.timeScale = 1.0f;
+            return;
+        }
         Flip(mousePos);
         mousePos = TargetPointValue(mousePos.x, mousePos.y);
         ray = mouseHigherThanPlayer ? new Ray2D(mousePos, Vector2.down) :

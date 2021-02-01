@@ -1,45 +1,53 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     public float speed;
-    public float jumpForce;
-    public float jumpUp;
-    public float speedJump;
+
+    public static PlayerController player;
     public float Popularity;
     public Slider[] slider;
     public float health = 100;
-    public bool isAtatck;
-
-    public AtackPlayer atackPlayer;
+    public Animator panelAnimation;
 
     internal Rigidbody2D rb;
-    internal float animSpeed = 1.0f;
     internal float scaleX;
 
     private AreaAtack areaAtack;
-    private int countJump;
     private Animator animation;
     private float velocity;
+    internal bool isLive;
+
+
+    [Header("Jump")]
+    public float jumpForce;
+    public float jumpTime;
+    public static bool isJumping;
+    public static bool isGrounded;
+    public Transform feetPos;
+    public float checkRadius;
+    public LayerMask whatIsGround;
+    private float jumpTimeCounter;
 
     private void Start()
     {
+        player = GetComponent<PlayerController>();
+        isLive = true;
         scaleX = transform.localScale.x;
-        Popularity = 15;
-        health = 100;
         areaAtack = GetComponentInChildren<AreaAtack>();
         rb = GetComponent<Rigidbody2D>();
         animation = GetComponent<Animator>();
         //Cursor.visible = false;
         slider[0].value = Popularity;
         slider[1].value = health;
+        panelAnimation.SetBool("PlayerDeath", false);
     }
 
     private void Update()
     {
-        if (!Input.anyKey)
+        if (!Input.anyKey && isLive)
         {
             AnimSet(0);
         }
@@ -47,27 +55,16 @@ public class PlayerController : MonoBehaviour
         Jump();
     }
 
-    private void Jump()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && countJump < 2)
-        {
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            countJump++;
-        }
-    }
-
     private void FixedUpdate()
     {
-        
+        if (!isLive)
+        {
+            return;
+        }
         if (Input.GetButton("Fire1"))
         {
             Flip(areaAtack.pointAtatck.position.x - transform.position.x);
-            isAtatck = true;
             AnimSet(3);
-        }
-        else
-        {
-            isAtatck = false;
         }
         velocity = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(velocity * speed, rb.velocity.y);
@@ -91,18 +88,38 @@ public class PlayerController : MonoBehaviour
             slider[1].value = health;
             if (health <= 0)
             {
-                SceneManager.LoadScene(0, LoadSceneMode.Single);
+                StartCoroutine(Death());
             }
-            //float pointOfImpact = atackEnemy.transform.position.x - transform.position.x;
-            //Flip(pointOfImpact);
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void Jump()
     {
-        if (collision.collider.CompareTag("Floor"))
+        isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
+
+
+        if (isGrounded == true && Input.GetKeyDown(KeyCode.Space))
         {
-            countJump = 0;
+            isJumping = true;
+            jumpTimeCounter = jumpTime;
+            rb.velocity = Vector2.up * jumpForce;
+        }
+
+        if (Input.GetKey(KeyCode.Space) && isJumping == true)
+        {
+            if (jumpTimeCounter > 0)
+            {
+                rb.velocity = Vector2.up * jumpForce;
+                jumpTimeCounter -= Time.deltaTime;
+            }
+            else
+            {
+                isJumping = false;
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            isJumping = false;
         }
     }
 
@@ -115,5 +132,22 @@ public class PlayerController : MonoBehaviour
     public void Flip(float value)
     {
         transform.localScale = new Vector3(scaleX * (value / Mathf.Abs(value)), transform.localScale.y, 1);
+    }
+
+
+
+    private IEnumerator Death()
+    {
+        isLive = false;
+        AnimSet(4);
+        yield return new WaitForSeconds(2.5f);
+        panelAnimation.SetBool("PlayerDeath", true);
+    }
+
+
+    public static void PopularityPlus(float value)
+    {
+        player.Popularity += value;
+        player.slider[0].value = player.Popularity;
     }
 }

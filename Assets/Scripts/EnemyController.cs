@@ -11,11 +11,7 @@ public class EnemyController : MonoBehaviour
 
     public Transform[] Eyes;
     public LayerMask[] mask;
-   
-    public bool isDanger;
 
-    public float health = 100;
-    private Slider slider;
 
     private float ifSeeThePlayer;
     private Ray2D ray;
@@ -23,8 +19,10 @@ public class EnemyController : MonoBehaviour
     private RaycastHit2D hitEnemy;
     private bool noMe;
     private float direction;
-
-    public EnemyController friend;
+    private bool isDanger;
+    private float health = 100;
+    private Slider slider;
+    private EnemyController friend;
 
     private void Start()
     {
@@ -48,38 +46,51 @@ public class EnemyController : MonoBehaviour
             {
                 VisibilityOverview(maxDistance, Eyes[1].position);
                 Flip();
-                if (hitPlayer.collider.GetComponent<PlayerController>().Popularity > 50 || isDanger)
-                {
-                    hitEnemy = Physics2D.Raycast(Eyes[1].position, ray.direction, maxDistance, mask[1]);
-                    noMe = hitEnemy.collider.GetComponent<EnemyController>() != gameObject.GetComponent<EnemyController>();
-                    friend = noMe ? hitEnemy.collider.GetComponent<EnemyController>() : null;
-                    if (friend != null) friend.isDanger = isDanger;
-
-                    var rayIsGround = new Ray(Eyes[2].position, Vector2.down);
-                    var hitIsGroundDown = Physics2D.Raycast(rayIsGround.origin, rayIsGround.direction, distance, mask[2]);
-                    var hitIsGroundUp = Physics2D.Raycast(rayIsGround.origin, -rayIsGround.direction, distance, mask[3]);
-                    
-                    if (Mathf.Abs(hitPlayer.point.x - transform.position.x) > 1.0f && hitIsGroundDown && !hitIsGroundUp)
-                    {
-                        rb.velocity = new Vector2(direction * speed, rb.velocity.y);
-                        AnimSet(1);
-                    }
-                    else
-                    {
-                        AnimSet(2);
-                    }
-                }
+                Move();
             }
         }
+
+
         bool isFriendNoNull = friend != null;
         if (hitPlayer.collider == null && (!isFriendNoNull || !isDanger))
         {
             VisibilityOverview(distance, Eyes[0].position);
-            Random.Range(30, 50);
+            ifSeeThePlayer = Random.Range(30, 50);
             AnimSet(0);
             isDanger = false;
             slider.gameObject.SetActive(false);
         }
+    }
+
+    private void Move()
+    {
+        if (hitPlayer.collider.GetComponent<PlayerController>().Popularity < 50 && !isDanger)
+        {
+            return;
+        }
+        HelpFriend();
+
+        var rayIsGround = new Ray(Eyes[2].position, Vector2.down);
+        var hitIsGroundDown = Physics2D.Raycast(rayIsGround.origin, rayIsGround.direction, distance, mask[2]);
+        var hitIsGroundUp = Physics2D.Raycast(rayIsGround.origin, -rayIsGround.direction, distance, mask[3]);
+
+        if (Mathf.Abs(hitPlayer.point.x - transform.position.x) > 1.0f && hitIsGroundDown && !hitIsGroundUp)
+        {
+            rb.velocity = new Vector2(direction * speed, rb.velocity.y);
+            AnimSet(1);
+        }
+        else
+        {
+            AnimSet(2);
+        }
+    }
+
+    private void HelpFriend()
+    {
+        hitEnemy = Physics2D.Raycast(Eyes[1].position, ray.direction, maxDistance, mask[1]);
+        noMe = hitEnemy.collider.GetComponent<EnemyController>() != gameObject.GetComponent<EnemyController>();
+        friend = noMe ? hitEnemy.collider.GetComponent<EnemyController>() : null;
+        if (friend != null) friend.isDanger = isDanger;
     }
 
     private void AnimSet(int animNumber)
@@ -98,7 +109,6 @@ public class EnemyController : MonoBehaviour
     {
         ray = new Ray2D(eyes, new Vector2(direction, 0));
         hitPlayer = Physics2D.Raycast(ray.origin, ray.direction, distanceRay, mask[0]);
-        Debug.DrawRay(ray.origin, ray.direction * distanceRay, Color.red);
     }
     
     private void OnTriggerEnter2D(Collider2D collision)
@@ -112,9 +122,7 @@ public class EnemyController : MonoBehaviour
             health += atackPlayer.TakeDamage() - ifSeeThePlayer;
             if (health <= 0)
             {
-                hitPlayer.collider.GetComponent<PlayerController>().Popularity += Random.Range(3, 11);
-                hitPlayer.collider.GetComponent<PlayerController>().slider[0].value =
-                    hitPlayer.collider.GetComponent<PlayerController>().Popularity;
+                PlayerController.PopularityPlus(Random.Range(3, 11));
                 Destroy(gameObject);
             }
         }
