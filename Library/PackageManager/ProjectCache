@@ -5,7 +5,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637473792820000000
+      ticks: 637478968470000000
     m_Hash: 4252359603
   m_LockFileStatus:
     m_FilePath: /Users/galymtlektesov/GameDev/Unity/BiProjectTestOne/Packages/packages-lock.json
@@ -13,7 +13,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637473792960000000
+      ticks: 637478968940000000
     m_Hash: 4180063361
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
