@@ -5,7 +5,7 @@ public class EnemyController : MonoBehaviour
 {
     private Rigidbody2D rb;
     private new Animator animation;
-    public float speed;
+    public float speedEnemy;
     public float distance = 7;
     private float maxDistance;
     private float minDistance;
@@ -17,19 +17,27 @@ public class EnemyController : MonoBehaviour
 
     private float ifSeeThePlayer;
     
-    private bool noMe;
     private float direction;
     private bool isDanger;
-    private float health = 100;
-    private Slider slider;
-    private EnemyController friend;
+    public float canDelay;
+    internal float nextDelay;
+    private float healthEnemy = 100;
+    private Slider sliderEnemmy;
+    private EnemyController friends;
     private PlayerController player;
+    private Vector2 startPosition;
+
+
+    public float minDelay;
+    public float maxDelay;
+    private float nextSpawn;
+    private float motion;
 
 
     private void Start()
     {
         player = FindObjectOfType<PlayerController>();
-        slider = GetComponentInChildren<Slider>();
+        sliderEnemmy = GetComponentInChildren<Slider>();
         rb = GetComponent<Rigidbody2D>();
         animation = GetComponent<Animator>();
         eyes = Eyes[0].position;
@@ -37,27 +45,25 @@ public class EnemyController : MonoBehaviour
         maxDistance = distance * 2;
         minDistance = distance;
         Eyes[1].position = new Vector2(Eyes[0].position.x + distance, Eyes[0].position.y);
-        slider.gameObject.SetActive(false);
-        Flip();
+        sliderEnemmy.gameObject.SetActive(false);
+        direction = transform.localScale.x > 0 ? 1 : -1;
+        startPosition = transform.position;
+        motion = Random.Range(0, 10);
+        nextSpawn = Random.Range(minDelay, maxDelay);
     }
 
     private void Update()
     {
         var ray = new Ray2D(eyes, new Vector2(direction, 0));
         var hit = Physics2D.Raycast(ray.origin, ray.direction, distance, mask[0]);
-
+        isDanger = nextDelay > Time.time;
         if (hit == player)
         {
             distance = player.Popularity > 25 || isDanger ? Watch(hit) : Past();
         }
-        if (hit != player && (friend == null || !friend.isDanger))
+        if (hit != player && !isDanger && (friends == null || !friends.isDanger))
         {
-            distance = minDistance;
-            eyes = Eyes[0].position;
-            ifSeeThePlayer = Random.Range(30, 50);
-            AnimSet(0);
-            isDanger = false;
-            slider.gameObject.SetActive(false);
+            Past();
         }
     }
 
@@ -65,28 +71,63 @@ public class EnemyController : MonoBehaviour
     private float Past()
     {
         ifSeeThePlayer = 0;
+        distance = minDistance;
+        eyes = Eyes[0].position;
+        ifSeeThePlayer = Random.Range(30, 50);
+        sliderEnemmy.gameObject.SetActive(false);
+        Debug.Log(Time.time > nextSpawn);
+        if (Time.time > nextSpawn)
+        {
+            motion = Random.Range(0, 100);
+            nextSpawn += Random.Range(minDelay, maxDelay);
+        }
+        return motion < 70 ? Idle() : Walk();
+    }
+
+    private float Walk()
+    {
+        var rayIsGround = new Ray(Eyes[2].position, Vector2.down);
+        var hitIsGroundDown = Physics2D.Raycast(rayIsGround.origin, rayIsGround.direction, 2, mask[2]);
+        var hitIsGroundUp = Physics2D.Raycast(rayIsGround.origin, -rayIsGround.direction, 2);
+
+        AnimSet(1);
+        if (Mathf.Abs(transform.position.x - startPosition.x) > 4.0f || !hitIsGroundDown ||  hitIsGroundUp)
+        {
+            Flip(startPosition.x - transform.position.x);
+        }
+        rb.velocity = new Vector2(direction * speedEnemy, rb.velocity.y);
+
         return minDistance;
     }
 
+    private float Idle()
+    {
+        AnimSet(0);
+        return minDistance;
+    }
     private float Watch(RaycastHit2D hit)
     {
         eyes = Eyes[1].position;
-        Flip();
+        Flip(player.transform.position.x - transform.position.x);
         return player.Popularity > 50 || isDanger ? Move(hit) : maxDistance;
     }
 
     private float Move(RaycastHit2D hit)
     {
+        nextDelay = canDelay + Time.time;
         HelpFriend();
 
         var rayIsGround = new Ray(Eyes[2].position, Vector2.down);
         var hitIsGroundDown = Physics2D.Raycast(rayIsGround.origin, rayIsGround.direction, distance, mask[2]);
-        var hitIsGroundUp = Physics2D.Raycast(rayIsGround.origin, -rayIsGround.direction, distance, mask[3]);
+        var hitIsGroundUp = Physics2D.Raycast(rayIsGround.origin, -rayIsGround.direction, distance);
 
-        if (Mathf.Abs(hit.point.x - transform.position.x) > 1.0f && hitIsGroundDown && !hitIsGroundUp)
+        if (Mathf.Abs(player.transform.position.x - transform.position.x) > 1.5f)
         {
-            rb.velocity = new Vector2(direction * speed, rb.velocity.y);
-            AnimSet(1);
+            if (hitIsGroundDown && !hitIsGroundUp)
+            {
+                rb.velocity = new Vector2(direction * speedEnemy, rb.velocity.y);
+                AnimSet(1);
+            }
         }
         else
         {
@@ -100,9 +141,12 @@ public class EnemyController : MonoBehaviour
     {
         var ray = new Ray2D(Eyes[1].position, new Vector2(direction, 0));
         var hitEnemy = Physics2D.Raycast(Eyes[1].position, ray.direction, maxDistance, mask[1]);
-        noMe = hitEnemy.collider.GetComponent<EnemyController>() != gameObject.GetComponent<EnemyController>();
-        friend = noMe ? hitEnemy.collider.GetComponent<EnemyController>() : null;
-        if (friend != null) friend.isDanger = true;
+
+        if (hitEnemy.collider.GetComponent<EnemyController>() != gameObject.GetComponent<EnemyController>())
+        {
+            friends = hitEnemy.collider.GetComponent<EnemyController>();
+            if (friends != null) friends.nextDelay = nextDelay;
+        }
     }
 
     private void AnimSet(int animNumber)
@@ -110,10 +154,9 @@ public class EnemyController : MonoBehaviour
         animation.SetInteger("State", animNumber);
     }
 
-    private void Flip()
+    private void Flip(float targetX)
     {
-        var diference = player.transform.position.x - transform.position.x;
-        direction = diference / Mathf.Abs(diference);
+        direction = targetX / Mathf.Abs(targetX);
         transform.localScale = new Vector3(direction, transform.localScale.y, 1);
     }
     
@@ -122,11 +165,11 @@ public class EnemyController : MonoBehaviour
         if (collision.GetComponent<AtackPlayer>())
         {
             var atackPlayer = collision.GetComponent<AtackPlayer>();
-            slider.gameObject.SetActive(true);
-            slider.value = health;
-            isDanger = true;
-            health += atackPlayer.TakeDamage() - ifSeeThePlayer;
-            if (health <= 0)
+            sliderEnemmy.gameObject.SetActive(true);
+            sliderEnemmy.value = healthEnemy;
+            nextDelay = canDelay + Time.time;
+            healthEnemy += atackPlayer.TakeDamage() - ifSeeThePlayer;
+            if (healthEnemy <= 0)
             {
                 player.Popularity += Random.Range(3, 11);
                 Destroy(gameObject);

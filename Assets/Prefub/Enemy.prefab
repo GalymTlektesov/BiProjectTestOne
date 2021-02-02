@@ -154,7 +154,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1626327293}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.25, y: 1.23, z: 0}
+  m_LocalPosition: {x: 0.71, y: 1.23, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2904371755354480232}
@@ -1033,8 +1033,8 @@ MonoBehaviour:
   - {fileID: 9057816781748474538}
   - {fileID: 1186334019123918060}
   m_Bounds:
-    m_Center: {x: 0.0024654493, y: 0.0048702806, z: 0}
-    m_Extent: {x: 0.122535, y: 0.23512988, z: 0}
+    m_Center: {x: 0.0024640262, y: 0.0048702806, z: 0}
+    m_Extent: {x: 0.122535005, y: 0.23512988, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!1 &5294676625400005504
@@ -1275,8 +1275,8 @@ MonoBehaviour:
   - {fileID: 8155978155236649255}
   - {fileID: 5187991130066718568}
   m_Bounds:
-    m_Center: {x: 0.008735478, y: 0.00797981, z: 0}
-    m_Extent: {x: 0.24126455, y: 0.2829403, z: 0}
+    m_Center: {x: 0.0087352395, y: 0.00797981, z: 0}
+    m_Extent: {x: 0.24126479, y: 0.2829403, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!1 &5597053292195250889
@@ -1485,7 +1485,7 @@ MonoBehaviour:
   - {fileID: 1186334019123918060}
   - {fileID: 9057816781748474538}
   m_Bounds:
-    m_Center: {x: 0.014105469, y: 0.0065751225, z: 0}
+    m_Center: {x: 0.014104992, y: 0.0065751225, z: 0}
     m_Extent: {x: 0.15569496, y: 0.21453486, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
@@ -1623,7 +1623,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f26963b73afd940e28184b359fc9f041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
+  speedEnemy: 3
   distance: 7
   Eyes:
   - {fileID: 8282323117544986903}
@@ -1635,11 +1635,12 @@ MonoBehaviour:
   - serializedVersion: 2
     m_Bits: 16384
   - serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 2560
   - serializedVersion: 2
     m_Bits: 2048
-  player: {fileID: 7193940597563988286, guid: 688bb5e12fc6247948d989f6c6fc0020, type: 3}
-  enemy: {fileID: 6802450754679232683}
+  canDelay: 3
+  minDelay: 3
+  maxDelay: 7
 --- !u!212 &9037738239475389044
 SpriteRenderer:
   m_ObjectHideFlags: 0
