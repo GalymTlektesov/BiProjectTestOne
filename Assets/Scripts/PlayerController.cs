@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public float checkRadius;
     public LayerMask whatIsGround;
     private float jumpTimeCounter;
+    public Transform rapierPosition;
 
     private void Start()
     {
@@ -61,11 +62,16 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButton("Fire1") && !RapierController.dropRapier)
         {
             Flip(areaAtack.pointAtatck.position.x - transform.position.x);
             AnimSet(3);
         }
+        transform.position = transform.position.x - rapierPosition.position.x > 30 ?
+            new Vector3(rapierPosition.position.x + 30, transform.position.y) : transform.position;
+        transform.position = rapierPosition.position.x - transform.position.x > 30 ?
+            new Vector3(rapierPosition.position.x - 30, transform.position.y) : transform.position;
+
         var velocity = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(velocity * speed, rb.velocity.y);
 

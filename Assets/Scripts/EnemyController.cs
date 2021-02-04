@@ -18,12 +18,12 @@ public class EnemyController : MonoBehaviour
     private float ifSeeThePlayer;
     
     private float direction;
-    private bool isDanger;
+    public bool isDanger;
     public float canDelay;
     internal float nextDelay;
     private float healthEnemy = 100;
     private Slider sliderEnemmy;
-    private EnemyController friends;
+    public EnemyController friends;
     private PlayerController player;
     private Vector2 startPosition;
 
@@ -32,10 +32,12 @@ public class EnemyController : MonoBehaviour
     public float maxDelay;
     private float nextSpawn;
     private float motion;
+    internal bool isDeath;
 
 
     private void Start()
     {
+        isDeath = false;
         player = FindObjectOfType<PlayerController>();
         sliderEnemmy = GetComponentInChildren<Slider>();
         rb = GetComponent<Rigidbody2D>();
@@ -44,7 +46,7 @@ public class EnemyController : MonoBehaviour
         ifSeeThePlayer = Random.Range(30, 50);
         maxDistance = distance * 2;
         minDistance = distance;
-        Eyes[1].position = new Vector2(Eyes[0].position.x + distance, Eyes[0].position.y);
+        Eyes[1].localPosition = new Vector2(Eyes[0].position.x - distance, Eyes[0].position.y);
         sliderEnemmy.gameObject.SetActive(false);
         direction = transform.localScale.x > 0 ? 1 : -1;
         startPosition = transform.position;
@@ -54,12 +56,16 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
+        if (isDeath)
+        {
+            return;
+        }
         var ray = new Ray2D(eyes, new Vector2(direction, 0));
         var hit = Physics2D.Raycast(ray.origin, ray.direction, distance, mask[0]);
         isDanger = nextDelay > Time.time;
-        if (hit == player)
+        if (hit == player || isDanger)
         {
-            distance = player.Popularity > 25 || isDanger ? Watch(hit) : Past();
+            distance = player.Popularity > 25 || isDanger ? Watch() : Past();
         }
         if (hit != player && !isDanger && (friends == null || !friends.isDanger))
         {
@@ -70,12 +76,11 @@ public class EnemyController : MonoBehaviour
 
     private float Past()
     {
-        ifSeeThePlayer = 0;
+        ifSeeThePlayer = Random.Range(30, 50);
         distance = minDistance;
         eyes = Eyes[0].position;
         ifSeeThePlayer = Random.Range(30, 50);
         sliderEnemmy.gameObject.SetActive(false);
-        Debug.Log(Time.time > nextSpawn);
         if (Time.time > nextSpawn)
         {
             motion = Random.Range(0, 100);
@@ -95,7 +100,7 @@ public class EnemyController : MonoBehaviour
         {
             Flip(startPosition.x - transform.position.x);
         }
-        rb.velocity = new Vector2(direction * speedEnemy, rb.velocity.y);
+        rb.velocity = new Vector2(direction * speedEnemy / 2, rb.velocity.y);
 
         return minDistance;
     }
@@ -105,29 +110,27 @@ public class EnemyController : MonoBehaviour
         AnimSet(0);
         return minDistance;
     }
-    private float Watch(RaycastHit2D hit)
+
+    private float Watch()
     {
         eyes = Eyes[1].position;
         Flip(player.transform.position.x - transform.position.x);
-        return player.Popularity > 50 || isDanger ? Move(hit) : maxDistance;
+        return player.Popularity > 50 || isDanger ? Move() : maxDistance;
     }
 
-    private float Move(RaycastHit2D hit)
+    private float Move()
     {
         nextDelay = canDelay + Time.time;
         HelpFriend();
 
         var rayIsGround = new Ray(Eyes[2].position, Vector2.down);
-        var hitIsGroundDown = Physics2D.Raycast(rayIsGround.origin, rayIsGround.direction, distance, mask[2]);
-        var hitIsGroundUp = Physics2D.Raycast(rayIsGround.origin, -rayIsGround.direction, distance);
+        var hitIsGroundDown = Physics2D.Raycast(rayIsGround.origin, rayIsGround.direction, 2, mask[2]);
+        var hitIsGroundUp = Physics2D.Raycast(rayIsGround.origin, -rayIsGround.direction, 1, mask[2]);
 
-        if (Mathf.Abs(player.transform.position.x - transform.position.x) > 1.5f)
+        if (Mathf.Abs(player.transform.position.x - transform.position.x) > 1.7f && hitIsGroundDown && !hitIsGroundUp)
         {
-            if (hitIsGroundDown && !hitIsGroundUp)
-            {
-                rb.velocity = new Vector2(direction * speedEnemy, rb.velocity.y);
-                AnimSet(1);
-            }
+            rb.velocity = new Vector2(direction * speedEnemy, rb.velocity.y);
+            AnimSet(1);
         }
         else
         {
@@ -171,8 +174,10 @@ public class EnemyController : MonoBehaviour
             healthEnemy += atackPlayer.TakeDamage() - ifSeeThePlayer;
             if (healthEnemy <= 0)
             {
+                sliderEnemmy.gameObject.SetActive(false);
                 player.Popularity += Random.Range(3, 11);
-                Destroy(gameObject);
+                AnimSet(3);
+                isDeath = true;
             }
         }
     }

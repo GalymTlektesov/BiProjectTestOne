@@ -32,11 +32,11 @@ public class ThrowPlayer : MonoBehaviour
         var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         target[0].gameObject.SetActive(isJerk);
-        if (canDealay && Input.GetButton("Fire2"))
+        if (canDealay && Input.GetButton("Fire2") && !RapierController.dropRapier)
         {
             Throw(mousePos);
         }
-        if (Input.GetButtonUp("Fire2"))
+        if (Input.GetButtonUp("Fire2") && !RapierController.dropRapier)
         {
             AfterThrow();
         }

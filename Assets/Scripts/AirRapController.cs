@@ -7,13 +7,12 @@ public class AirRapController : MonoBehaviour
     public float distance;
     public float damage;
     public LayerMask wtIsSolid;
-    public Rigidbody2D rigidbody;
     private Vector2 startPosition;
+    private BoxCollider2D boxCollider;
 
     private void Start()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
-        rigidbody.simulated = false;
+        boxCollider = GetComponent<BoxCollider2D>();
         startPosition = transform.position;
     }
 
@@ -22,6 +21,7 @@ public class AirRapController : MonoBehaviour
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, transform.up, distance, wtIsSolid);
         if (hitInfo.collider != null)
         {
+            boxCollider.enabled = false;
             return;
         }
 
@@ -30,9 +30,5 @@ public class AirRapController : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, 180), 10.0f * Time.deltaTime);
         }
         transform.Translate(Vector2.up * speed * Time.deltaTime);
-        //else
-        //{
-        //    rigidbody.simulated = true;
-        //}
     }
 }

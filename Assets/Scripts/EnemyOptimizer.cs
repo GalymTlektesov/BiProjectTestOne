@@ -21,6 +21,10 @@ public class EnemyOptimizer : MonoBehaviour
 
     private void OnBecameInvisible()
     {
+        if (enemy.isDeath)
+        {
+            Destroy(gameObject);
+        }
         enemy.enabled = false;
         animation.enabled = false;
     }
