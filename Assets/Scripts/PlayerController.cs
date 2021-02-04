@@ -103,7 +103,6 @@ public class PlayerController : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
 
-
         if (isGrounded  && Input.GetKeyDown(KeyCode.Space))
         {
             isJumping = true;
@@ -139,7 +138,6 @@ public class PlayerController : MonoBehaviour
     {
         transform.localScale = new Vector3(scaleX * (value / Mathf.Abs(value)), transform.localScale.y, 1);
     }
-
 
 
     private IEnumerator Death()

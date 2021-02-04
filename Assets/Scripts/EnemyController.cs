@@ -44,9 +44,9 @@ public class EnemyController : MonoBehaviour
         animation = GetComponent<Animator>();
         eyes = Eyes[0].position;
         ifSeeThePlayer = Random.Range(30, 50);
-        maxDistance = distance * 2;
+        maxDistance = distance * 1.5f;
         minDistance = distance;
-        Eyes[1].localPosition = new Vector2(Eyes[0].position.x - distance, Eyes[0].position.y);
+        Eyes[1].localPosition = new Vector2(Eyes[0].localPosition.x - distance / 2, Eyes[0].localPosition.y);
         sliderEnemmy.gameObject.SetActive(false);
         direction = transform.localScale.x > 0 ? 1 : -1;
         startPosition = transform.position;
@@ -142,13 +142,12 @@ public class EnemyController : MonoBehaviour
 
     private void HelpFriend()
     {
-        var ray = new Ray2D(Eyes[1].position, new Vector2(direction, 0));
-        var hitEnemy = Physics2D.Raycast(Eyes[1].position, ray.direction, maxDistance, mask[1]);
+        var friendCollider = Physics2D.OverlapCircle(Eyes[0].position, minDistance, mask[1]);
 
-        if (hitEnemy.collider.GetComponent<EnemyController>() != gameObject.GetComponent<EnemyController>())
+        if (friendCollider)
         {
-            friends = hitEnemy.collider.GetComponent<EnemyController>();
-            if (friends != null) friends.nextDelay = nextDelay;
+            friends = friendCollider.GetComponent<EnemyController>();
+            friends.nextDelay = nextDelay;
         }
     }
 
@@ -171,7 +170,7 @@ public class EnemyController : MonoBehaviour
             sliderEnemmy.gameObject.SetActive(true);
             sliderEnemmy.value = healthEnemy;
             nextDelay = canDelay + Time.time;
-            healthEnemy += atackPlayer.TakeDamage() - ifSeeThePlayer;
+            healthEnemy += atackPlayer.TakeDamage();
             if (healthEnemy <= 0)
             {
                 sliderEnemmy.gameObject.SetActive(false);

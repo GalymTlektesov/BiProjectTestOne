@@ -7,10 +7,12 @@ public class RapierController : MonoBehaviour
     public Transform shotPoint;
     private int numberOfButtonPresses = 0;
 
-    public Transform trans;
+    public PlayerController prince;
     public Transform playerRapier;
     public Transform rapierTransform;
     public float distance;
+    public float canDelay;
+    private float nextDelay;
     private GameObject rapier;
     internal static bool dropRapier;
 
@@ -18,16 +20,17 @@ public class RapierController : MonoBehaviour
     {
         Vector3 difference = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
 
-
+        bool canThrow = nextDelay < Time.time;
         float rotZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);
 
-        rapierTransform.position = rapier ? rapier.transform.position : trans.position;
+        rapierTransform.position = rapier ? rapier.transform.position : prince.transform.position;
 
-        if(Input.GetKeyDown(KeyCode.E) && !Input.GetButton("Fire2"))
+        if(Input.GetKeyDown(KeyCode.E) && !Input.GetButton("Fire2") && prince.isLive)
         {
-            if (numberOfButtonPresses % 2 == 0)
+            if (numberOfButtonPresses % 2 == 0 && canThrow)
             {
+                nextDelay = Time.time + canDelay;
                 numberOfButtonPresses++;
                 rapier = Instantiate(rapierRef.gameObject, shotPoint.position, transform.rotation);
                 playerRapier.gameObject.SetActive(false);
@@ -36,7 +39,7 @@ public class RapierController : MonoBehaviour
             else if (numberOfButtonPresses % 2 == 1)
             {
                 numberOfButtonPresses++;
-                trans.position = rapier.transform.position;
+                prince.transform.position = rapier.transform.position;
                 playerRapier.gameObject.SetActive(true);
                 Destroy(rapier);
                 dropRapier = false;

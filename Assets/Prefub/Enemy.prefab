@@ -1332,8 +1332,8 @@ MonoBehaviour:
   - {fileID: 8155978155236649255}
   - {fileID: 5187991130066718568}
   m_Bounds:
-    m_Center: {x: 0.0087352395, y: 0.00797981, z: 0}
-    m_Extent: {x: 0.24126479, y: 0.2829403, z: 0}
+    m_Center: {x: 0.008735478, y: 0.00797981, z: 0}
+    m_Extent: {x: 0.24126455, y: 0.2829403, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!1 &5597053292195250889
@@ -1694,7 +1694,9 @@ MonoBehaviour:
     m_Bits: 16384
   - serializedVersion: 2
     m_Bits: 18944
+  isDanger: 0
   canDelay: 3
+  friends: {fileID: 0}
   minDelay: 7
   maxDelay: 15
 --- !u!212 &9037738239475389044
