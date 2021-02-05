@@ -1,11 +1,10 @@
-﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerController.cs">
+﻿<Properties StartupConfiguration="{BD71BA9A-CF75-941A-B2A3-8D3402D193EF}|Модульные тесты">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/RapierController.cs">
     <Files>
-      <File FileName="Assets/Scripts/EnemyController.cs" Line="103" Column="61" />
-      <File FileName="Assets/Scripts/AirRapController.cs" />
-      <File FileName="Assets/Scripts/RapierController.cs" />
-      <File FileName="Assets/Scripts/CameraController.cs" Line="39" Column="127" />
-      <File FileName="Assets/Scripts/PlayerController.cs" Line="74" Column="1" />
+      <File FileName="Assets/Scripts/AirRapController.cs" Line="9" Column="32" />
+      <File FileName="Assets/Scripts/RapierController.cs" Line="30" Column="60" />
+      <File FileName="Assets/Scripts/PlayerController.cs" Line="68" Column="24" />
+      <File FileName="Assets/Scripts/ThrowPlayer.cs" Line="37" Column="12" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -14,7 +13,7 @@
             <Node name="Assembly-CSharp" expanded="True">
               <Node name="Assets" expanded="True">
                 <Node name="Scripts" expanded="True">
-                  <Node name="PlayerController.cs" selected="True" />
+                  <Node name="RapierController.cs" selected="True" />
                 </Node>
               </Node>
             </Node>

@@ -103,14 +103,14 @@ public class PlayerController : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
 
-        if (isGrounded  && Input.GetKeyDown(KeyCode.Space))
+        if (isGrounded  && Input.GetButtonDown("Jump"))
         {
             isJumping = true;
             jumpTimeCounter = jumpTime;
             rb.velocity = Vector2.up * jumpForce;
         }
 
-        if (Input.GetKey(KeyCode.Space) && isJumping)
+        if (Input.GetButton("Jump") && isJumping)
         {
             if (jumpTimeCounter > 0)
             {
@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour
                 isJumping = false;
             }
         }
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetButtonUp("Jump"))
         {
             isJumping = false;
         }

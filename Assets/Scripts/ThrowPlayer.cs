@@ -34,7 +34,14 @@ public class ThrowPlayer : MonoBehaviour
         target[0].gameObject.SetActive(isJerk);
         if (canDealay && Input.GetButton("Fire2") && !RapierController.dropRapier)
         {
-            Throw(mousePos);
+            if (Input.GetJoystickNames() != null)
+            {
+                Throw(target[0].position);
+            }
+            else
+            {
+                Throw(mousePos);
+            }
         }
         if (Input.GetButtonUp("Fire2") && !RapierController.dropRapier)
         {
@@ -112,12 +119,13 @@ public class ThrowPlayer : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(transform.position - target[Mathf.Abs(index -1)].position,
             transform.TransformDirection(Vector3.up));
         target[0].rotation = new Quaternion(0, 0, rotation.z * zRotation, rotation.w * wRotation);
+        targetPosition = new Vector2(targetPosition.x + Input.GetAxis("Horizontal") / 2, targetPosition.y + Input.GetAxis("Vertical") / 2);
         target[0].position = targetPosition;
     }
 
     private void Flip(Vector3 mousePos)
     {
-        var difference = mousePos.x - transform.position.x;
+        var difference = target[0].position.x - transform.position.x;
         playerController.Flip(difference);
         float direction = Mathf.Abs(difference) / difference;
         rayHorizontal = new Ray2D(target[2].position, new Vector2(direction, 0));

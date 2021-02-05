@@ -18,7 +18,8 @@ public class RapierController : MonoBehaviour
 
     void Update()
     {
-        Vector3 difference = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        Vector3 difference = Input.GetJoystickNames() != null ? new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) :
+            Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
 
         bool canThrow = nextDelay < Time.time;
         float rotZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
@@ -26,7 +27,7 @@ public class RapierController : MonoBehaviour
 
         rapierTransform.position = rapier ? rapier.transform.position : prince.transform.position;
 
-        if(Input.GetKeyDown(KeyCode.E) && !Input.GetButton("Fire2") && prince.isLive)
+        if((Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Joystick1Button4)) && !Input.GetButton("Fire2") && prince.isLive)
         {
             if (numberOfButtonPresses % 2 == 0 && canThrow)
             {

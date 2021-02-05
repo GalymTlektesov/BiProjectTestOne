@@ -22,7 +22,7 @@ public class CloakController : MonoBehaviour
             bb = false;
         }
 
-        if (rigidbody.velocity.y < 0 && Input.GetKeyDown(KeyCode.S))
+        if (rigidbody.velocity.y < 0 && Input.GetButtonDown("Jump") && Input.GetAxis("Vertical") < 0)
         {
             bb = true;
             rigidbody.drag = 0;
